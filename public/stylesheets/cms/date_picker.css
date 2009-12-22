@@ -1,27 +1,32 @@
 #ui-datepicker-div {
   background: #FFF url(/images/cms/content_bg.gif) repeat-x -25px 0px;
-  border: 5px solid #888;
-  width: 200px;
+  border: 5px solid #888;  
   padding: 10px;
   z-index: 100;
+  min-height: 150px;
+  min-width: 140px;
 }
 
 #ui-datepicker-div table {
   border: 1px solid #EEE;
   padding: 3px;
   margin-top: 5px;
+  width: 140px;
+  height: 130px;
 }
+
 
 #ui-datepicker-control, #ui-datepicker-links {
   border: 1px solid #000;
 }
 
 .ui-datepicker-header select {
-
+  margin: 0.25em 0.5em;
 }
 
 .ui-datepicker-clear a{
-color: #FFFFFF;
+  color: #FFFFFF;
+  padding: 0.25em;
 }
 
 

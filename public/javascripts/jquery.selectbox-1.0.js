@@ -9,9 +9,17 @@
  * The code is inspired from Autocomplete plugin (http://www.dyve.net/jquery/?autocomplete)
  *
  * Revision: $Id$
- * Version: 0.5
+ * Version: 1.0
  * 
  * Changelog :
+ *  Version 1.0
+ *  - Support jQuery noConflict option
+ *  - Add callback for onChange event, thanks to Jason
+ *  - Fix IE8 support
+ *  - Fix auto width support
+ *  - Fix focus on firefox dont show the carret
+ *  Version 0.6
+ *  - Fix IE scrolling problem
  *  Version 0.5 
  *  - separate css style for current selected element and hover element which solve the highlight issue 
  *  Version 0.4
@@ -42,15 +50,17 @@ jQuery.SelectBox = function(selectobj, options) {
 	opt.inputClass = opt.inputClass || "selectbox";
 	opt.containerClass = opt.containerClass || "selectbox-wrapper";
 	opt.hoverClass = opt.hoverClass || "current";
-	opt.currentClass = opt.selectedClass || "selected"
+	opt.currentClass = opt.currentClass || "selected";
+    opt.onChangeCallback = opt.onChangeCallback || false;
+    opt.onChangeParams = opt.onChangeParams || false;
 	opt.debug = opt.debug || false;
 	
 	var elm_id = selectobj.id;
-	var active = -1;
+	var active = 0;
 	var inFocus = false;
 	var hasfocus = 0;
 	//jquery object for select element
-	var $select = $(selectobj);
+	var $select = jQuery(selectobj);
 	// jquery container object
 	var $container = setupContainer(opt);
 	//jquery input object 
@@ -63,7 +73,7 @@ jQuery.SelectBox = function(selectobj, options) {
 	
 	$input
 	.click(function(){
-	if (!inFocus) {
+    if (!inFocus) {
 		  $container.toggle();
 		}
 	})
@@ -71,6 +81,7 @@ jQuery.SelectBox = function(selectobj, options) {
 	   if ($container.not(':visible')) {
 	       inFocus = true;
 	       $container.show();
+           $container.focus();
 	   }
 	})
 	.keydown(function(event) {	   
@@ -97,10 +108,18 @@ jQuery.SelectBox = function(selectobj, options) {
 		if ($container.is(':visible') && hasfocus > 0 ) {
 			if(opt.debug) console.log('container visible and has focus')
 		} else {
-			hideMe();	
+		  // Workaround for ie scroll - thanks to Bernd Matzner
+            if((jQuery.browser.msie && jQuery.browser.version.substr(0,1) < 8) || jQuery.browser.safari){ // check for safari too - workaround for webkit
+                if(document.activeElement.getAttribute('id').indexOf('_container')==-1){
+                    hideMe();
+                } else {
+                    $input.focus();
+                }
+            } else {
+                hideMe();
+            }
 		}
 	});
-
 
 	function hideMe() { 
 		hasfocus = 0;
@@ -109,55 +128,69 @@ jQuery.SelectBox = function(selectobj, options) {
 	
 	function init() {
 		$container.append(getSelectOptions($input.attr('id'))).hide();
-	    var width = opt.width || $input.css('width');
+		var width = $input.css('width');
 		$container.width(width);
     }
 	
 	function setupContainer(options) {
 		var container = document.createElement("div");
-		$container = $(container);
+		$container = jQuery(container);
 		$container.attr('id', elm_id+'_container');
 		$container.addClass(options.containerClass);
+        $container.css('display', 'none');
 		
 		return $container;
 	}
 	
 	function setupInput(options) {
 		var input = document.createElement("input");
-		var $input = $(input);
+		var $input = jQuery(input);
 		$input.attr("id", elm_id+"_input");
 		$input.attr("type", "text");
 		$input.addClass(options.inputClass);
 		$input.attr("autocomplete", "off");
 		$input.attr("readonly", "readonly");
 		$input.attr("tabIndex", $select.attr("tabindex")); // "I" capital is important for ie
-		
+        $input.css("width", $select.css("width"));
 		return $input;	
 	}
 	
 	function moveSelect(step) {
-		var lis = $("li", $container);
-		if (!lis) return;
-
+		var lis = jQuery("li", $container);
+		if (!lis || lis.length == 0) return false;
 		active += step;
-
+    //loop through list
 		if (active < 0) {
+			active = lis.size();
+		} else if (active > lis.size()) {
 			active = 0;
-		} else if (active >= lis.size()) {
-			active = lis.size() - 1;
 		}
-
+        scroll(lis, active);
 		lis.removeClass(opt.hoverClass);
 
-		$(lis[active]).addClass(opt.hoverClass);
+		jQuery(lis[active]).addClass(opt.hoverClass);
+	}
+	
+	function scroll(list, active) {
+      var el = jQuery(list[active]).get(0);
+      var list = $container.get(0);
+      
+      if (el.offsetTop + el.offsetHeight > list.scrollTop + list.clientHeight) {
+        list.scrollTop = el.offsetTop + el.offsetHeight - list.clientHeight;      
+      } else if(el.offsetTop < list.scrollTop) {
+        list.scrollTop = el.offsetTop;
+      }
 	}
 	
 	function setCurrent() {	
-		var li = $("li."+opt.currentClass, $container).get(0);
-		var el = li.id.replace($select[0].id+'_input_','');
-		$select.val(el);
-		$select.change(); //trigger the change event for the select
+		var li = jQuery("li."+opt.currentClass, $container).get(0);
+		var ar = (''+li.id).split('_');
+		var el = ar[ar.length-1];
+		//$select.val(el);
+        $select.get(0).selectedIndex = $('li', $container).index(li);
 		$input.val($(li).html());
+        opt.onChangeParams = { selectedVal : $select.val() };
+        if (opt.onChangeCallback) opt.onChangeCallback(opt.onChangeParams);
 		return true;
 	}
 	
@@ -197,13 +230,17 @@ jQuery.SelectBox = function(selectobj, options) {
 			.click(function(event) {
 			  var fl = $('li.'+opt.hoverClass, $container).get(0);
 				if (opt.debug) console.log('click on :'+this.id);
-				$('li.'+opt.currentClass).removeClass(opt.currentClass); 
+				$('li.'+opt.currentClass, $container).removeClass(opt.currentClass); 
 				$(this).addClass(opt.currentClass);
 				setCurrent();
+				//$select.change();
+				$select.get(0).blur();
 				hideMe();
 			});
 		});
 		return ul;
 	}
+	
+	
 	
 };

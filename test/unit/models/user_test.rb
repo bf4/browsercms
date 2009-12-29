@@ -66,52 +66,18 @@ class UserTest < ActiveSupport::TestCase
       assert !@user.valid?
     end
   end
-end
-
-class UserAbleToViewTest < ActiveSupport::TestCase
-
-  test "User able_to_view? with String path" do
-    non_admin = GroupType.create!(:cms_access=>false)
-    group = Factory(:group, :group_type=>non_admin)
-    public_user = Factory(:user)
-    public_user.groups<< group
-    public_user.save!
-
-    section = Factory(:section, :path=>"/members", :name=>"Members")
-    section.groups << group
-    section.save!
-
-    assert public_user.able_to_view?("/members")
+  test "full name or login" do
+    login = 'robbo'
+    fn = 'Bob'
+    ln = 'Smith'
+    u = User.new(:login => 'robbo')
+    assert_equal login, u.full_name_or_login 
+    u.first_name = fn
+    assert_equal fn, u.full_name_or_login 
+    u.last_name = ln
+    assert_equal fn + ' ' + ln, u.full_name_or_login 
+    
   end
-
-  test "User can't view a nil section" do
-    user = User.new
-
-    Section.expects(:find_by_path).with("/members").returns(nil)
-    user.expects(:able_to_view_without_paths?).never
-
-    assert_raise ActiveRecord::RecordNotFound do
-      user.able_to_view?("/members")
-    end
-
-  end
-
-  test "Users with cmsaccess?" do
-    @non_admin = GroupType.create!(:cms_access=>true)
-    @group = Factory(:group, :group_type=>@non_admin)
-    @public_user = Factory(:user)
-    @public_user.groups<< @group
-    @public_user.save!
-
-    assert(@public_user.cms_access?, "")
-  end
-  
-  test "cms_access? determines if a user is considered to have cmsadmin privledges or not." do
-    user = User.new
-    assert(!user.cms_access?, "")
-  end
-  
-
 end
 
 class UserPermissionsTest < ActiveSupport::TestCase
@@ -268,33 +234,6 @@ class GuestUserTest < ActiveSupport::TestCase
     assert !@user.able_to?("do anything global")
     assert @user.able_to_view?(@public_page)
     assert !@user.able_to_view?(@protected_page)
-    assert !@user.cms_access?
-  end
-
-  test "override viewable sections for the guest group" do
-    @user.expects(:viewable_sections).returns([@protected_section])
-    assert_equal Section, @protected_section.class
-    assert(@protected_section.is_a?(Section), "")
-    assert @user.able_to_view?(@protected_section)
-  end
-
-  test "GuestUser can't view a nil section" do
-    user = GuestUser.new
-
-    Section.expects(:find_by_path).with("/members").returns(nil)
-
-    assert_raise ActiveRecord::RecordNotFound do
-      user.able_to_view?("/members")
-    end
-
   end
   
-  test "Guest User able_to_view? with String path" do
-    section = Factory(:section, :path=>"/members", :name=>"Members")
-    section.groups << @guest_group
-    section.save!
-
-    assert @user.able_to_view?("/members")
-
-  end
 end

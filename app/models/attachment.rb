@@ -136,7 +136,7 @@ class Attachment < ActiveRecord::Base
   #----- Class Methods ---------------------------------------------------------
   
   def self.storage_location
-    @storage_location ||= File.join(Rails.root, "/tmp/uploads")
+    @storage_location ||= File.join(Rails.root, "/uploads")
   end
   
   def self.storage_location=(storage_location)

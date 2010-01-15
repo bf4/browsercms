@@ -17,7 +17,7 @@
   </div>
     <%= render_connectable connectable %>
 </div>
-<% require_javascript_include ['jquery', 'cms/application'] %>
+<% require_javascript_include ['cms/application'] %>
 <% content_for :html_head do %>
     <% if  @authenticity_token_loaded.nil? && protect_against_forgery? %><script type="text/javascript">
       jQuery(function($){

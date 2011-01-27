@@ -59,7 +59,7 @@ module Cms::Routes
         :versions => :get
       }, :collection => {
         :publish => :put
-      }, :has_many => [:tasks]
+      }, :has_many => [:task_items]
       version_cms_page '/cms/pages/:id/version/:version', :controller => 'cms/pages', :action => 'version', :conditions => {:method => :get}
       revert_to_cms_page '/cms/pages/:id/revert_to/:version', :controller => 'cms/pages', :action => 'revert_to', :conditions => {:method => :put}
 
@@ -75,7 +75,7 @@ module Cms::Routes
       }
       cms.attachment '/attachments/:id', :controller => 'attachments', :action => 'show'
 
-      cms.resources :tasks, :member => {:complete => :put}, :collection => {:complete => :put}
+      cms.resources :task_items, :member => {:complete => :put}, :collection => {:complete => :put}
       cms.toolbar '/toolbar', :controller => 'toolbar'
       
       # TODO: Make an actual content library controller 

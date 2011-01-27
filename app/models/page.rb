@@ -44,7 +44,7 @@ class Page < ActiveRecord::Base
   
   has_one :section_node, :as => :node, :dependent => :destroy
   
-  has_many :tasks
+  has_many :task_items
   
   before_validation :append_leading_slash_to_path
   before_destroy :delete_connectors
@@ -259,12 +259,12 @@ class Page < ActiveRecord::Base
     (a.size > 0 && ancestors[1]) ? ancestors[1] : Section.root.first
   end
   
-  def current_task
-    tasks.incomplete.first
+  def current_task_item
+    task_items.incomplete.first
   end
   
   def assigned_to
-    current_task ? current_task.assigned_to : nil
+    current_task_item ? current_task_item.assigned_to : nil
   end
   
   def assigned_to?(user)

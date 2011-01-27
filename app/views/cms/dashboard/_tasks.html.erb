@@ -1,7 +1,7 @@
-<div class="dashboard_unit" id="tasks">
+<div class="dashboard_unit" id="task_items">
   <h2 class="left">Tasks</h2>
 
-  <% form_tag complete_cms_tasks_path, :method => :put do %>
+  <% form_tag complete_cms_task_items_path, :method => :put do %>
     <div class="roundedcorners" style="position: relative">
       <table class="data">
         <thead>
@@ -14,28 +14,28 @@
           </tr>
         </thead>
         <tbody>
-          <% if @incomplete_tasks.empty? %>
+          <% if @incomplete_task_items.empty? %>
             <tr>
               <td class="first"></td>
-              <td colspan="3" style="letter-spacing: 1px; height: 30px; padding-top: 10px;">You currently have no assigned tasks. </td>
+              <td colspan="3" style="letter-spacing: 1px; height: 30px; padding-top: 10px;">You currently have no assigned task_items. </td>
 	      <td class="last"></td>
             </tr>
           <% else %>  
-            <% @incomplete_tasks.each do |task| %>
+            <% @incomplete_task_items.each do |task_item| %>
               <tr>
                 <td class="first"></td>
                 <td class="select">
-                  <%= check_box_tag "task_ids[]", task.id, false, :id => "complete_task_#{task.id}" %>
+                  <%= check_box_tag "task_item_ids[]", task_item.id, false, :id => "complete_task_item_#{task_item.id}" %>
                 </td>
                 <td class="name">
                   <div class="dividers">
-                    <%= link_to h(task.page.name_with_section_path), task.page.path %>
+                    <%= link_to h(task_item.page.name_with_section_path), task_item.page.path %>
                   </div>
                 </td>
                 <td class="assigned_by">
-                  <div class="dividers"><%=h task.assigned_by.login %></div>
+                  <div class="dividers"><%=h task_item.assigned_by.login %></div>
                 </td>
-                <td class="due_date"><%= task.due_date ? task.due_date.strftime("%b %d") : nil %></td>
+                <td class="due_date"><%= task_item.due_date ? task_item.due_date.strftime("%b %d") : nil %></td>
                 <td class="last"></td>
               </tr>
             <% end %>

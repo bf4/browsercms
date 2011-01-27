@@ -93,7 +93,7 @@ Factory.define :site do |m|
   m.domain {|a| "#{a.name.gsub(/\s/,"_").downcase}.com" }
 end
 
-Factory.define :task do |m|
+Factory.define :task_item do |m|
   m.association :assigned_by, :factory => :user
   m.association :assigned_to, :factory => :user
   m.association :page

@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
 
   has_many :user_group_memberships
   has_many :groups, :through => :user_group_memberships
-  has_many :tasks, :foreign_key => "assigned_to_id"
+  has_many :task_items, :foreign_key => "assigned_to_id"
     
   named_scope :active, :conditions => {:expires_at => nil }
   named_scope :able_to_edit_or_publish_content, 

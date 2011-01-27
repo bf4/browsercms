@@ -33,11 +33,11 @@ padding: 6px;
   position: relative;
 }
 
-.tasks_margin {
+.task_items_margin {
   margin-left: 10px;
 }
 
-.tasks_margin .dashboard_unit {
+.task_items_margin .dashboard_unit {
   margin-left: 5px !important;
 }
 
@@ -100,13 +100,13 @@ background: transparent url(/images/cms/dashboard/bottom_cap_content.png) no-rep
   float: left;
 }
 
-#tasks {
+#task_items {
   margin-left: 0;
   float: left;
 }
 
-#tasks th.assigned_by,
-#tasks th.due_date {
+#task_items th.assigned_by,
+#task_items th.due_date {
   white-space: nowrap;
 }
 

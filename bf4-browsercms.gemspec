@@ -4,13 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{browsercms}
+  s.name = %q{bf4-browsercms}
   s.version = "3.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["BrowserMedia"]
+  s.authors = ["BrowserMedia", "Benjamin Fleischer"]
   s.date = %q{2011-01-28}
-  s.email = %q{github@browsermedia.com}
+  s.description = %q{A fork that can be used as a gem with Bundler as the model Task has been changed to Task_Item to remove a reserved word namespace issue in Rails. There is also a corresponding bf4-bcms_news. You'll likely want to require active_support and cms/init in your rails initializer.}
+  s.email = %q{dev@benjaminfleischer.com}
   s.extra_rdoc_files = [
     "LICENSE.txt",
      "README.markdown"
@@ -246,7 +247,7 @@ Gem::Specification.new do |s|
      "app/views/portlets/tag_cloud/_form.html.erb",
      "app/views/portlets/tag_cloud/render.html.erb",
      "app/views/tests/pretend/open_with_layout.html.erb",
-     "browsercms.gemspec",
+     "bf4-browsercms.gemspec",
      "db/demo/data.rb",
      "db/demo/page_partials/_footer.html.erb",
      "db/demo/page_partials/_header.html.erb",

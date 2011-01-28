@@ -12,15 +12,16 @@ require 'tasks/rails'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "browsercms"
+    gem.name = "bf4-browsercms"
     gem.summary = %Q{BrowserCMS is a general purpose, open source Web Content Management System (CMS), written in Ruby on Rails.}
-    gem.email = "github@browsermedia.com"
+    gem.description = "A fork that can be used as a gem with Bundler as the model Task has been changed to Task_Item to remove a reserved word namespace issue in Rails. There is also a corresponding bf4-bcms_news. You'll likely want to require active_support and cms/init in your rails initializer."
+    gem.email = "dev@benjaminfleischer.com"
     gem.homepage = "http://www.browsercms.org"
-    gem.authors = ["BrowserMedia"]
+    gem.authors = ["BrowserMedia", "Benjamin Fleischer"]
     gem.rubyforge_project = 'browsercms' # This line would be new
 
     gem.files = Dir["rails/*.rb"]
-    gem.files += Dir["browsercms.gemspec"]
+    gem.files += Dir["bf4-browsercms.gemspec"]
     gem.files += Dir["doc/app/**/*"]
     gem.files += Dir["doc/guides/html/**/*"]
     gem.files += Dir["app/**/*"]

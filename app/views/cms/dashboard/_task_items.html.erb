@@ -14,7 +14,8 @@
           </tr>
         </thead>
         <tbody>
-          <% if @incomplete_task_items.empty? %>
+          <% if @incomplete_task
+            _items.empty? %>
             <tr>
               <td class="first"></td>
               <td colspan="3" style="letter-spacing: 1px; height: 30px; padding-top: 10px;">You currently have no assigned task_items. </td>

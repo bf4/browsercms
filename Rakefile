@@ -40,7 +40,7 @@ begin
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
 rescue LoadError
-  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
+  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://rubygems.com"
 end
 
 # These are new tasks
@@ -49,10 +49,10 @@ begin
   namespace :rubyforge do
 
     desc "Release gem to RubyForge"
-    task :release => ["rubyforge:release:gem"]
+    task :release => ["rubygems:release:gem"]
 
 
   end
 rescue LoadError
-  puts "Rake SshDirPublisher is unavailable or your rubyforge environment is not configured."
+  puts "Rake SshDirPublisher is unavailable or your rubygems environment is not configured."
 end

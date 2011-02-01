@@ -4,7 +4,7 @@ module Cms
 
     define_method(:root) { __root__ }
 
-    ::SPEC = eval(File.read(__root__ + '/browsercms.gemspec'))
+    ::SPEC = eval(File.read(__root__ + '/bf4-browsercms.gemspec'))
 
     attr_accessor :attachment_file_permission
 

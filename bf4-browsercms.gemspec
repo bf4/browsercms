@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{bf4-browsercms}
-  s.version = "3.1.0"
+  s.version = "3.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["BrowserMedia", "Benjamin Fleischer"]
-  s.date = %q{2011-01-28}
+  s.date = %q{2011-02-01}
   s.description = %q{A fork that can be used as a gem with Bundler as the model Task has been changed to Task_Item to remove a reserved word namespace issue in Rails. There is also a corresponding bf4-bcms_news. You'll likely want to require active_support and cms/init in your rails initializer.}
   s.email = %q{dev@benjaminfleischer.com}
   s.extra_rdoc_files = [
@@ -654,7 +654,29 @@ Gem::Specification.new do |s|
      "lib/cms/extensions/string.rb",
      "lib/cms/init.rb",
      "lib/cms/routes.rb",
+     "lib/generators/browser_cms/USAGE",
+     "lib/generators/browser_cms/browser_cms_generator.rb",
+     "lib/generators/browser_cms/templates/README",
+     "lib/generators/browser_cms_demo_site/USAGE",
+     "lib/generators/browser_cms_demo_site/browser_cms_demo_site_generator.rb",
+     "lib/generators/browser_cms_demo_site/templates/migration.rb",
+     "lib/generators/content_block/USAGE",
+     "lib/generators/content_block/content_block_generator.rb",
+     "lib/generators/content_block/templates/_form.html.erb",
+     "lib/generators/content_block/templates/content_block.rb",
+     "lib/generators/content_block/templates/controller.rb",
+     "lib/generators/content_block/templates/functional_test.erb",
+     "lib/generators/content_block/templates/migration.rb",
+     "lib/generators/content_block/templates/render.html.erb",
+     "lib/generators/content_block/templates/unit_test.erb",
+     "lib/generators/portlet/USAGE",
+     "lib/generators/portlet/portlet_generator.rb",
+     "lib/generators/portlet/templates/_form.html.erb",
+     "lib/generators/portlet/templates/portlet.rb",
+     "lib/generators/portlet/templates/render.html.erb",
+     "lib/generators/portlet/templates/unit_test.erb",
      "lib/initial_data.rb",
+     "lib/rails/init.rb",
      "lib/sequence.rb",
      "lib/tasks/cms.rake",
      "lib/tasks/db.rake",
@@ -914,28 +936,6 @@ Gem::Specification.new do |s|
      "public/themes/blue_steel/images/logo.jpg",
      "public/themes/blue_steel/images/splash.jpg",
      "public/themes/blue_steel/stylesheets/style.css",
-     "rails/init.rb",
-     "rails_generators/browser_cms/USAGE",
-     "rails_generators/browser_cms/browser_cms_generator.rb",
-     "rails_generators/browser_cms/templates/README",
-     "rails_generators/browser_cms_demo_site/USAGE",
-     "rails_generators/browser_cms_demo_site/browser_cms_demo_site_generator.rb",
-     "rails_generators/browser_cms_demo_site/templates/migration.rb",
-     "rails_generators/content_block/USAGE",
-     "rails_generators/content_block/content_block_generator.rb",
-     "rails_generators/content_block/templates/_form.html.erb",
-     "rails_generators/content_block/templates/content_block.rb",
-     "rails_generators/content_block/templates/controller.rb",
-     "rails_generators/content_block/templates/functional_test.erb",
-     "rails_generators/content_block/templates/migration.rb",
-     "rails_generators/content_block/templates/render.html.erb",
-     "rails_generators/content_block/templates/unit_test.erb",
-     "rails_generators/portlet/USAGE",
-     "rails_generators/portlet/portlet_generator.rb",
-     "rails_generators/portlet/templates/_form.html.erb",
-     "rails_generators/portlet/templates/portlet.rb",
-     "rails_generators/portlet/templates/render.html.erb",
-     "rails_generators/portlet/templates/unit_test.erb",
      "templates/blank.rb",
      "templates/demo.rb",
      "templates/module.rb"
